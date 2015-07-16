@@ -11,7 +11,7 @@
 		float: left;
 	}
 	tr:last-child td {
-	   border:1pt solid black;
+	   border:2pt solid black;
 	   text-align: left;
 	   height: 20px;
 	   max-width: 50px;
@@ -25,6 +25,7 @@
 <div></div>
 </body>
 	<script type="text/javascript">
+		var answerArray = [];
 		var number = (function() {
 
 		    var get40RandomNumber = (function() {
@@ -68,11 +69,12 @@
 			var outputHTML= "";
 			var numberIndex=0;
 			for(var index=0; index<20; index++) {
-				outputHTML += "<table>";
+				outputHTML += "<table data-index='"+index+"'>";
 				outputHTML += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;" + substructionSet[numberIndex] + "</td></tr>";
 				outputHTML += "<tr><td>&nbsp;&nbsp;- " + substructionSet[numberIndex+1] + "</td></tr>";
 				outputHTML += "<tr class='last-child'><td contenteditable='true'></td></tr></table>";
 				numberIndex +=2;
+				answerArray[index] = substructionSet[numberIndex] - substructionSet[numberIndex+1];
 			}
 			$('div').html(outputHTML);
 			bindEvent();
@@ -82,15 +84,28 @@
 			var outputHTML= "";
 			var numberIndex=0;
 			for(var index=0; index<20; index++) {
-				outputHTML += "<table>";
+				outputHTML += "<table data-index='"+index+"'>";
 				outputHTML += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + substructionSet[numberIndex] + "</td></tr>";
 				outputHTML += "<tr><td>&nbsp;&nbsp;+ " + substructionSet[numberIndex+1] + "</td></tr>";
 				outputHTML += "<tr class='last-child'><td contenteditable='true'></td></tr></table>";
+				answerArray[index] = substructionSet[numberIndex] + substructionSet[numberIndex+1];
 				numberIndex +=2;
 			}
 			$('div').html(outputHTML);
 			bindEvent();
 		}); 
+
+		var checkResult = (function(value, index, element) {console.log(answerArray[index]);
+			if(value==answerArray[index]) {
+				$(element).css({
+					"background-color" : "#BDF584"					
+				});
+			} else {
+				$(element).css({
+					"background-color" : "#F58484"					
+				});
+			}
+		});
 
 		$(document).ready(function() {
 			var n = new number();
@@ -111,7 +126,13 @@
 			    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
 			        return false;
 			    }
-		    });
+			});
+			$("td[contenteditable='true']").unbind('keyup');
+			$('td[contenteditable="true"]').on('keyup', function(event) {
+				if($(event.currentTarget).text().length>0) {
+			    	checkResult(parseInt($(event.currentTarget).text()), parseInt($(event.currentTarget).parent().parent().parent().data('index')),$(event.currentTarget)[0]);
+			    }
+			})
 		});
 	</script>
 </html>
