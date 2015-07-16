@@ -74,6 +74,7 @@
 				numberIndex +=2;
 			}
 			$('div').html(outputHTML);
+			bindEvent();
 		}); 
 
 		var generateAdditions = (function(substructionSet) {
@@ -87,6 +88,7 @@
 				numberIndex +=2;
 			}
 			$('div').html(outputHTML);
+			bindEvent();
 		}); 
 
 		$(document).ready(function() {
@@ -99,7 +101,11 @@
 		        event.preventDefault();
 		        generateAdditions(n.getNumberSetForAddition());
 		    });
-		    $(".last-child").on('keypress', function(event) {
+
+		});
+		var bindEvent = (function() {
+			$("td[contenteditable='true']").unbind('keypress');
+		    $("td[contenteditable='true']").on('keypress', function(event) {
 		    	if($(event.currentTarget).text().length>=3) {
 		    		return false;
 		    	}
