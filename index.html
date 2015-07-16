@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.js"></script>
+</head>
+<body>
+<a href="javascript:void(0)">Click to generate Substructions</a>
+<a href="javascript:void(0)">Click to generate Additions</a>
+</body>
+	<script type="text/javascript">
+		var number = (function() {
+
+		    var get40RandomNumber = (function() {
+		    	var numberArray = [];
+		    	for(var index=0; index<20; index++) {
+		    		var tempNumber = (Math.random()*10000);
+		    		var numberStringArray = tempNumber.toString();
+		    		while(parseInt(numberStringArray[0])==0 || parseInt(numberStringArray[1])==0 || parseInt(numberStringArray[2])==0 || parseInt(numberStringArray[3])==0) {
+		    			tempNumber = (Math.random()*10000);
+		    			numberStringArray = tempNumber.toString();
+		    		}
+		    		numberArray.push(parseInt(numberStringArray[0]+numberStringArray[1]));
+		    		numberArray.push(parseInt(numberStringArray[2]+numberStringArray[3]));
+		    	}
+		    	return numberArray;
+		    });
+
+		    var rearrangeNumber = (function(numberArray) {
+		    	for(var index=0; index<numberArray.length; index+=2) {
+		    		if(numberArray[index+1]>numberArray[index]) {
+		    			var temp = numberArray[index+1];
+		    			numberArray[index+1] = numberArray[index];
+		    			numberArray[index] = temp;
+		    		}
+		    	}
+		    	return numberArray;
+		    });
+
+		    this.getNumberSetForAddition = (function() {
+		    	var numbersArray = get40RandomNumber();
+		    	return numbersArray;
+		    });
+		    this.getNumberSetForSubstruction = (function() {
+		    	var numbersArray = rearrangeNumber(get40RandomNumber());
+		    	return numbersArray;
+		    });
+
+		});
+
+		var generateSubstructions = (function(substructionSet) {
+			
+		}); 
+
+		$(document).ready(function() {
+			var n = new number();
+			$("a:first").on('click', function(event) {
+		        event.preventDefault();
+		        generateSubstructions(n.getNumberSetForSubstruction());
+		    });
+		    $("a:eq(1)").on('click', function(event) {
+		        event.preventDefault();
+		        generateAdditions(n.getNumberSetForAddition());
+		    });
+		});
+	</script>
+</html>
