@@ -3,10 +3,22 @@
 <head>
 	<title></title>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.js"></script>
+	<style type="text/css">
+	table {
+		height: 10%;
+		width : 5%;
+		margin: 40px;
+		float: left;
+	}
+	tr:last-child td {
+	   border:1pt solid black;
+	}
+	</style>
 </head>
 <body>
 <a href="javascript:void(0)">Click to generate Substructions</a>
 <a href="javascript:void(0)">Click to generate Additions</a>
+<div></div>
 </body>
 	<script type="text/javascript">
 		var number = (function() {
@@ -16,7 +28,7 @@
 		    	for(var index=0; index<20; index++) {
 		    		var tempNumber = (Math.random()*10000);
 		    		var numberStringArray = tempNumber.toString();
-		    		while(parseInt(numberStringArray[0])==0 || parseInt(numberStringArray[1])==0 || parseInt(numberStringArray[2])==0 || parseInt(numberStringArray[3])==0) {
+		    		while(parseInt(numberStringArray[0])==0 || parseInt(numberStringArray[1])==0 || parseInt(numberStringArray[2])==0 || parseInt(numberStringArray[3])==0 || isNaN(parseInt(numberStringArray[0]))|| isNaN(parseInt(numberStringArray[1]))|| isNaN(parseInt(numberStringArray[2]))|| isNaN(parseInt(numberStringArray[3]))) {
 		    			tempNumber = (Math.random()*10000);
 		    			numberStringArray = tempNumber.toString();
 		    		}
@@ -49,7 +61,29 @@
 		});
 
 		var generateSubstructions = (function(substructionSet) {
-			
+			var outputHTML= "";
+			var numberIndex=0;
+			for(var index=0; index<20; index++) {
+				outputHTML += "<table>";
+				outputHTML += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;" + substructionSet[numberIndex] + "</td></tr>";
+				outputHTML += "<tr><td>&nbsp;&nbsp;- " + substructionSet[numberIndex+1] + "</td></tr>";
+				outputHTML += "<tr class='last-child'><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr></table>";
+				numberIndex +=2;
+			}
+			$('div').html(outputHTML);
+		}); 
+
+		var generateAdditions = (function(substructionSet) {
+			var outputHTML= "";
+			var numberIndex=0;
+			for(var index=0; index<20; index++) {
+				outputHTML += "<table>";
+				outputHTML += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + substructionSet[numberIndex] + "</td></tr>";
+				outputHTML += "<tr><td>&nbsp;&nbsp;+ " + substructionSet[numberIndex+1] + "</td></tr>";
+				outputHTML += "<tr class='last-child'><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr></table>";
+				numberIndex +=2;
+			}
+			$('div').html(outputHTML);
 		}); 
 
 		$(document).ready(function() {
