@@ -70,7 +70,7 @@
 			var numberIndex=0;
 			for(var index=0; index<20; index++) {
 				outputHTML += "<table data-index='"+index+"'>";
-				outputHTML += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + substructionSet[numberIndex] + "</td></tr>";
+				outputHTML += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;" + substructionSet[numberIndex] + "</td></tr>";
 				outputHTML += "<tr><td>&nbsp;&nbsp;- " + substructionSet[numberIndex+1] + "</td></tr>";
 				outputHTML += "<tr class='last-child'><td contenteditable='true'></td></tr></table>";
 				answerArray[index] = substructionSet[numberIndex] - substructionSet[numberIndex+1];
@@ -85,7 +85,7 @@
 			var numberIndex=0;
 			for(var index=0; index<20; index++) {
 				outputHTML += "<table data-index='"+index+"'>";
-				outputHTML += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + substructionSet[numberIndex] + "</td></tr>";
+				outputHTML += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + substructionSet[numberIndex] + "</td></tr>";
 				outputHTML += "<tr><td>&nbsp;&nbsp;+ " + substructionSet[numberIndex+1] + "</td></tr>";
 				outputHTML += "<tr class='last-child'><td contenteditable='true'></td></tr></table>";
 				answerArray[index] = substructionSet[numberIndex] + substructionSet[numberIndex+1];
