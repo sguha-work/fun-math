@@ -73,8 +73,8 @@
 				outputHTML += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;" + substructionSet[numberIndex] + "</td></tr>";
 				outputHTML += "<tr><td>&nbsp;&nbsp;- " + substructionSet[numberIndex+1] + "</td></tr>";
 				outputHTML += "<tr class='last-child'><td contenteditable='true'></td></tr></table>";
-				numberIndex +=2;
 				answerArray[index] = substructionSet[numberIndex] - substructionSet[numberIndex+1];
+				numberIndex +=2;
 			}
 			$('div').html(outputHTML);
 			bindEvent();
