@@ -12,7 +12,7 @@
 	}
 	tr:last-child td {
 	   border:2pt solid black;
-	   text-align: left;
+	   text-align: center;
 	   height: 20px;
 	   max-width: 50px;
 	   overflow: hidden;
@@ -138,6 +138,7 @@
 				if($(event.currentTarget).text().length>0) {
 			    	checkResult(parseInt($(event.currentTarget).text()), parseInt($(event.currentTarget).parent().parent().parent().data('index')),$(event.currentTarget)[0]);
 			    }
+			    $(event.currentTarget).text($(event.currentTarget).text());
 			})
 		});
 	</script>
