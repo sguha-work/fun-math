@@ -26,11 +26,12 @@
 </body>
 	<script type="text/javascript">
 		var answerArray = [];
+		var numberOfMath = 28;
 		var number = (function() {
 
 		    var get40RandomNumber = (function() {
 		    	var numberArray = [];
-		    	for(var index=0; index<30; index++) {
+		    	for(var index=0; index<numberOfMath; index++) {
 		    		var tempNumber = (Math.random()*10000);
 		    		var numberStringArray = tempNumber.toString();
 		    		while(parseInt(numberStringArray[0])==0 || parseInt(numberStringArray[1])==0 || parseInt(numberStringArray[2])==0 || parseInt(numberStringArray[3])==0 || isNaN(parseInt(numberStringArray[0]))|| isNaN(parseInt(numberStringArray[1]))|| isNaN(parseInt(numberStringArray[2]))|| isNaN(parseInt(numberStringArray[3]))) {
@@ -68,7 +69,7 @@
 		var generateSubstructions = (function(substructionSet) {
 			var outputHTML= "";
 			var numberIndex=0;
-			for(var index=0; index<30; index++) {
+			for(var index=0; index<numberOfMath; index++) {
 				outputHTML += "<table data-index='"+index+"'>";
 				outputHTML += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;" + substructionSet[numberIndex] + "</td></tr>";
 				outputHTML += "<tr><td>&nbsp;&nbsp;- " + substructionSet[numberIndex+1] + "</td></tr>";
@@ -83,7 +84,7 @@
 		var generateAdditions = (function(substructionSet) {
 			var outputHTML= "";
 			var numberIndex=0;
-			for(var index=0; index<30; index++) {
+			for(var index=0; index<numberOfMath; index++) {
 				outputHTML += "<table data-index='"+index+"'>";
 				outputHTML += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + substructionSet[numberIndex] + "</td></tr>";
 				outputHTML += "<tr><td>&nbsp;&nbsp;+ " + substructionSet[numberIndex+1] + "</td></tr>";
