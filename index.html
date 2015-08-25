@@ -20,9 +20,11 @@
 	</style>
 </head>
 <body>
+Enter the time for the test here <input type="number" value="20"/> &nbsp; Minutes</br></br></br>
+Click Additions/Substruction to begin test&nbsp;&nbsp;
 <button>Substructions</button>
 <button>Additions</button>
-<div></div>
+<div id="div_test"></div>
 </body>
 	<script type="text/javascript">
 		var answerArray = [];
@@ -65,9 +67,40 @@
 		    });
 
 		});
-
+		var startCounter = (function(time) {
+			$("button").attr('disabled', 'disabled');
+			$("#lbl_timer").css({
+				"color": "red",
+				"font-weight": "bold"
+			});
+			var seconds = parseInt(time)*60;
+			$("#lbl_timer").text((seconds/60)+":"+"00");
+			var timer = window.setInterval(function(){
+				var text = $("#lbl_timer").text(),
+					textArray = text.split(":"),
+					minutes = parseInt(textArray[0]),
+					seconds = parseInt(textArray[1]);
+				if(!seconds) {
+					if(!minutes) {
+						window.clearInterval(timer);
+						$("#lbl_timer").text("00:00");
+						$("#div_test input").attr('readonly', 'readonly');
+						$("button").removeAttr('disabled');
+						$("td[contenteditable='true']").attr('contenteditable', 'false');
+					} else {
+						minutes -= 1;
+						seconds = 59;	
+					}
+					
+				} else {
+					seconds -= 1;
+				}
+				
+				$("#lbl_timer").text(minutes+":"+seconds);
+			},1000);
+		});
 		var generateSubstructions = (function(substructionSet) {
-			var outputHTML= "";
+			var outputHTML= "</br></br><div>You got <label id='lbl_timer'></label> minutes left</div>";
 			var numberIndex=0;
 			for(var index=0; index<numberOfMath; index++) {
 				outputHTML += "<table data-index='"+index+"'>";
@@ -77,12 +110,13 @@
 				answerArray[index] = substructionSet[numberIndex] - substructionSet[numberIndex+1];
 				numberIndex +=2;
 			}
-			$('div').html(outputHTML);
+			$('#div_test').html(outputHTML);
+			startCounter($("input[type='number']").val());
 			bindEvent();
 		}); 
 
 		var generateAdditions = (function(substructionSet) {
-			var outputHTML= "";
+			var outputHTML= "</br></br><div>You got <label id='lbl_timer'></label> minutes left</div>";
 			var numberIndex=0;
 			for(var index=0; index<numberOfMath; index++) {
 				outputHTML += "<table data-index='"+index+"'>";
@@ -92,7 +126,8 @@
 				answerArray[index] = substructionSet[numberIndex] + substructionSet[numberIndex+1];
 				numberIndex +=2;
 			}
-			$('div').html(outputHTML);
+			$('#div_test').html(outputHTML);
+			startCounter($("input[type='number']").val());
 			bindEvent();
 		}); 
 
@@ -109,6 +144,7 @@
 		});
 
 		$(document).ready(function() {
+			$("button").removeAttr('disabled');
 			var n = new number();
 			$("button:first").on('click', function(event) {
 		        event.preventDefault();
