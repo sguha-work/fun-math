@@ -20,17 +20,20 @@
 	</style>
 </head>
 <body>
+Enter the time for the test here <input type="number" value="20"/> &nbsp; Minutes</br></br></br>
+Click Additions/Substruction to begin test&nbsp;&nbsp;
 <button>Substructions</button>
 <button>Additions</button>
-<div></div>
+<div id="div_test"></div>
 </body>
 	<script type="text/javascript">
 		var answerArray = [];
+		var numberOfMath = 28;
 		var number = (function() {
 
 		    var get40RandomNumber = (function() {
 		    	var numberArray = [];
-		    	for(var index=0; index<20; index++) {
+		    	for(var index=0; index<numberOfMath; index++) {
 		    		var tempNumber = (Math.random()*10000);
 		    		var numberStringArray = tempNumber.toString();
 		    		while(parseInt(numberStringArray[0])==0 || parseInt(numberStringArray[1])==0 || parseInt(numberStringArray[2])==0 || parseInt(numberStringArray[3])==0 || isNaN(parseInt(numberStringArray[0]))|| isNaN(parseInt(numberStringArray[1]))|| isNaN(parseInt(numberStringArray[2]))|| isNaN(parseInt(numberStringArray[3]))) {
@@ -64,11 +67,42 @@
 		    });
 
 		});
-
+		var startCounter = (function(time) {
+			$("button").attr('disabled', 'disabled');
+			$("#lbl_timer").css({
+				"color": "red",
+				"font-weight": "bold"
+			});
+			var seconds = parseInt(time)*60;
+			$("#lbl_timer").text((seconds/60)+":"+"00");
+			var timer = window.setInterval(function(){
+				var text = $("#lbl_timer").text(),
+					textArray = text.split(":"),
+					minutes = parseInt(textArray[0]),
+					seconds = parseInt(textArray[1]);
+				if(!seconds) {
+					if(!minutes) {
+						window.clearInterval(timer);
+						$("#lbl_timer").text("00:00");
+						$("#div_test input").attr('readonly', 'readonly');
+						$("button").removeAttr('disabled');
+						$("td[contenteditable='true']").attr('contenteditable', 'false');
+					} else {
+						minutes -= 1;
+						seconds = 59;	
+					}
+					
+				} else {
+					seconds -= 1;
+				}
+				
+				$("#lbl_timer").text(minutes+":"+seconds);
+			},1000);
+		});
 		var generateSubstructions = (function(substructionSet) {
-			var outputHTML= "";
+			var outputHTML= "</br></br><div>You got <label id='lbl_timer'></label> minutes left</div>";
 			var numberIndex=0;
-			for(var index=0; index<20; index++) {
+			for(var index=0; index<numberOfMath; index++) {
 				outputHTML += "<table data-index='"+index+"'>";
 				outputHTML += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;" + substructionSet[numberIndex] + "</td></tr>";
 				outputHTML += "<tr><td>&nbsp;&nbsp;- " + substructionSet[numberIndex+1] + "</td></tr>";
@@ -76,14 +110,20 @@
 				answerArray[index] = substructionSet[numberIndex] - substructionSet[numberIndex+1];
 				numberIndex +=2;
 			}
-			$('div').html(outputHTML);
-			bindEvent();
+			if(isNaN(parseInt($("input[type='number']").val()))) {
+				alert("Please enter time in numbers only.");
+			} else {
+				$('#div_test').html(outputHTML);
+				startCounter($("input[type='number']").val());
+				bindEvent();	
+			}
+			
 		}); 
 
 		var generateAdditions = (function(substructionSet) {
-			var outputHTML= "";
+			var outputHTML= "</br></br><div>You got <label id='lbl_timer'></label> minutes left</div>";
 			var numberIndex=0;
-			for(var index=0; index<20; index++) {
+			for(var index=0; index<numberOfMath; index++) {
 				outputHTML += "<table data-index='"+index+"'>";
 				outputHTML += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + substructionSet[numberIndex] + "</td></tr>";
 				outputHTML += "<tr><td>&nbsp;&nbsp;+ " + substructionSet[numberIndex+1] + "</td></tr>";
@@ -91,11 +131,17 @@
 				answerArray[index] = substructionSet[numberIndex] + substructionSet[numberIndex+1];
 				numberIndex +=2;
 			}
-			$('div').html(outputHTML);
-			bindEvent();
+			
+			if(isNaN(parseInt($("input[type='number']").val()))) {
+				alert("Please enter time in numbers only.");
+			} else {
+				$('#div_test').html(outputHTML);
+				startCounter($("input[type='number']").val());
+				bindEvent();	
+			}
 		}); 
 
-		var checkResult = (function(value, index, element) {console.log(answerArray[index]);
+		var checkResult = (function(value, index, element) {
 			if(value==answerArray[index]) {
 				$(element).css({
 					"background-color" : "#BDF584"					
@@ -108,6 +154,7 @@
 		});
 
 		$(document).ready(function() {
+			$("button").removeAttr('disabled');
 			var n = new number();
 			$("button:first").on('click', function(event) {
 		        event.preventDefault();
