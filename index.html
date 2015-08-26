@@ -110,9 +110,14 @@ Click Additions/Substruction to begin test&nbsp;&nbsp;
 				answerArray[index] = substructionSet[numberIndex] - substructionSet[numberIndex+1];
 				numberIndex +=2;
 			}
-			$('#div_test').html(outputHTML);
-			startCounter($("input[type='number']").val());
-			bindEvent();
+			if(isNaN(parseInt($("input[type='number']").val()))) {
+				alert("Please enter time in numbers only.");
+			} else {
+				$('#div_test').html(outputHTML);
+				startCounter($("input[type='number']").val());
+				bindEvent();	
+			}
+			
 		}); 
 
 		var generateAdditions = (function(substructionSet) {
@@ -126,9 +131,14 @@ Click Additions/Substruction to begin test&nbsp;&nbsp;
 				answerArray[index] = substructionSet[numberIndex] + substructionSet[numberIndex+1];
 				numberIndex +=2;
 			}
-			$('#div_test').html(outputHTML);
-			startCounter($("input[type='number']").val());
-			bindEvent();
+			
+			if(isNaN(parseInt($("input[type='number']").val()))) {
+				alert("Please enter time in numbers only.");
+			} else {
+				$('#div_test').html(outputHTML);
+				startCounter($("input[type='number']").val());
+				bindEvent();	
+			}
 		}); 
 
 		var checkResult = (function(value, index, element) {
